@@ -92,14 +92,14 @@ uint32_t QSPY_encode(uint8_t *dstBuf, uint32_t dstSize,
     uint8_t b;
 
     uint8_t *dst = &dstBuf[0];
-    uint8_t const *src = &srcBuf[1]; /* skip the sequence from the soruce */
+    uint8_t const *src = &srcBuf[1]; /* skip the sequence from the source */
 
     --srcBytes; /* account for skipping the sequence number in the source */
 
     /* supply the sequence number */
     ++l_txTargetSeq;
     b = l_txTargetSeq;
-    QS_INSERT_ESC_BYTE(b); /* insert esceped sequence into destination */
+    QS_INSERT_ESC_BYTE(b); /* insert escaped sequence into destination */
 
     for (; srcBytes > 0; ++src, --srcBytes) {
         b = *src;
@@ -298,7 +298,6 @@ void QSPY_sendTP(QSpyRecord const * const qrec) {
     char const *name = (char const *)&qrec->start[n];
 
     KeyType key = QSPY_findFun(name);
-
     if (key == (KeyType)0) {
         SNPRINTF_LINE("   <F-END> ERROR    Function Dictionary not found for "
                       "Name=%s", name);
@@ -332,7 +331,7 @@ void QSPY_sendTP(QSpyRecord const * const qrec) {
             QSPY_onPrintLn();
         }
         else {
-             (void)(*PAL_vtbl.send2Target)(l_dstBuf, nBytes);
+        	(void)(*PAL_vtbl.send2Target)(l_dstBuf, nBytes);
              /* send2Target() reports error by itself */
         }
     }

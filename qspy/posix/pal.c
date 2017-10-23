@@ -111,7 +111,6 @@ static FILE *l_file = (FILE *)0;
 QSpyStatus PAL_openTargetSer(char const *comName, int baudRate) {
     struct termios t;
     speed_t spd;
-
     /* setup the PAL virtual table for the Serial communication... */
     PAL_vtbl.getEvt      = &ser_getEvt;
     PAL_vtbl.send2Target = &ser_send2Target;
@@ -224,13 +223,13 @@ static QSPYEvtType ser_getEvt(unsigned char *buf, size_t *pBytes) {
         return QSPY_ERROR_EVT;
     }
 
-    /* any intput available from the keyboard? */
+    /* any input available from the keyboard? */
     evt = kbd_receive(&readSet, buf, pBytes);
     if (evt != QSPY_NO_EVT) {
         return evt;
     }
 
-    /* any intput available from the Back-End socket? */
+    /* any input available from the Back-End socket? */
     evt = be_receive(&readSet, buf, pBytes);
     if (evt != QSPY_NO_EVT) {
         return evt;
@@ -279,7 +278,6 @@ struct sockaddr_in l_clientAddr;
 /*..........................................................................*/
 QSpyStatus PAL_openTargetTcp(int portNum) {
     struct sockaddr_in local;
-
     /* setup the PAL virtual table for the TCP/IP Target connection... */
     PAL_vtbl.getEvt      = &tcp_getEvt;
     PAL_vtbl.send2Target = &tcp_send2Target;
@@ -336,7 +334,7 @@ static QSPYEvtType tcp_getEvt(unsigned char *buf, size_t *pBytes) {
     QSPYEvtType evt;
     fd_set readSet = l_readSet;
 
-    /* block indefinitely until any input source has intput */
+    /* block indefinitely until any input source has input */
     int nrec = select(l_maxFd, &readSet, 0, 0, NULL);
 
     if (nrec == 0) {
@@ -348,7 +346,7 @@ static QSPYEvtType tcp_getEvt(unsigned char *buf, size_t *pBytes) {
         return QSPY_ERROR_EVT;
     }
 
-    /* any intput available from the keyboard? */
+    /* any input available from the keyboard? */
     evt = kbd_receive(&readSet, buf, pBytes);
     if (evt != QSPY_NO_EVT) {
         return evt;

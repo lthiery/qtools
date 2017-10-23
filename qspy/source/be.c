@@ -136,7 +136,7 @@ void BE_parse(unsigned char *buf, size_t nBytes) {
         len = QSPY_encode(qbuf, sizeof(qbuf), buf, nBytes);
         if (len > 0U) {
             if ((*PAL_vtbl.send2Target)(qbuf, len) != QSPY_SUCCESS) {
-                SNPRINTF_LINE("   <COMMS> ERROR    Sedning Data "
+                SNPRINTF_LINE("   <COMMS> ERROR    Sending Data "
                               "to the Target Rec=%d,Len=%d",
                               (int)buf[1], (int)len);
                 QSPY_printError();
